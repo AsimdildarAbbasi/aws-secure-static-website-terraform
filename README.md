@@ -6,38 +6,6 @@ By leveraging Amazon CloudFront as a Content Delivery Network (CDN) with Origin 
 
 ---
 
-## Architecture Diagram
-
-The diagram below illustrates the flow of a user request to the static website and the deployment flow managed by Terraform.
-
-```mermaid
-graph TD
-    %% Define User Flow
-    User([User / Browser]) -->|1. HTTPS Request (Port 443)| CF[CloudFront CDN]
-    CF -->|2. Authorizes via OAC (SigV4)| S3[Private S3 Bucket]
-    
-    %% Define Admin/Dev Flow
-    Admin([DevOps Engineer]) -->|3. Terraform Apply| TF[Terraform CLI]
-    TF -->|4. Provisions Infrastructure| AWS[AWS Cloud]
-    TF -->|5. Uploads Static Assets| S3
-    TF -->|6. Saves State & Lockfile| S3State[S3 State Bucket]
-
-    subgraph AWS Cloud
-        CF
-        S3
-        S3State
-    end
-
-    %% Styling
-    style User fill:#f9f,stroke:#333,stroke-width:2px
-    style Admin fill:#bbf,stroke:#333,stroke-width:2px
-    style CF fill:#ff9,stroke:#333,stroke-width:1px
-    style S3 fill:#dfd,stroke:#333,stroke-width:1px
-    style S3State fill:#ddf,stroke:#333,stroke-width:1px
-```
-
----
-
 ## Infrastructure Design & Key Components
 
 ### 1. Secure Storage (Amazon S3)
